@@ -1,6 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
-import { auth } from "./firebase/fireBaseUtils";
+import { auth, createUserProfile } from "./firebase/fireBaseUtils";
 import "./App.style.css";
 import HomePage from "./Pages/HomePage/HomePage";
 import ShopPage from "./Pages/ShopPage/ShopPage";
@@ -16,9 +16,18 @@ class App extends React.Component {
     this.unsubscribe = null;
   }
   componentDidMount() {
-    this.unsubscribe = auth.onAuthStateChanged(user =>
-      this.setState({ currentUser: user })
-    );
+    this.unsubscribe = auth.onAuthStateChanged(async userAuth => {
+      if (userAuth) {
+        const realUser = await createUserProfile(userAuth);
+        realUser.onSnapshot(snapshot => {
+          const user = snapshot.data();
+          const id = snapshot.id;
+          this.setState({ currentUser: { id, ...user } });
+        });
+      } else {
+        this.setState({ currentUser: null });
+      }
+    });
   }
   componentWillUnmount() {
     this.unsubscribe();
