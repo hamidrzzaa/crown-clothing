@@ -6,7 +6,7 @@ const PreviewCollection = ({ title, items }) => {
   const renderCollectionItem = function() {
     return items
       .slice(0, 4)
-      .map(item => <CollectionItem key={item.id} {...item} />);
+      .map(item => <CollectionItem key={item.id} item={item} />);
   };
   return (
     <div className="collection-preview">

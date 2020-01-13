@@ -38,12 +38,13 @@ const Header = ({ currentUser, cartDropDownHidden }) => {
         {renderSignInOutBtn()}
         <CartIcon />
       </div>
-      {cartDropDownHidden ? <CartDropdown /> : null}
+      {cartDropDownHidden ? null : <CartDropdown />}
     </div>
   );
 };
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     currentUser: state.user.currentUser,
     cartDropDownHidden: state.cart.hidden
