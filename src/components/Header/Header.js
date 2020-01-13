@@ -1,9 +1,12 @@
 import React from "react";
 import "./Header.styles.scss";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 import { auth } from "../../firebase/fireBaseUtils";
 import { ReactComponent as Logo } from "../../assets/4.2 crown.svg.svg";
-const Header = ({ currentUser }) => {
+import CartIcon from "../CartIcon/CartIcon";
+import CartDropdown from "../CartDropdown/CartDropdown";
+const Header = ({ currentUser, cartDropDownHidden }) => {
   const renderSignInOutBtn = () => {
     if (currentUser) {
       return (
@@ -19,6 +22,7 @@ const Header = ({ currentUser }) => {
       );
     }
   };
+
   return (
     <div className="header">
       <Link className="logo-container" to="/">
@@ -32,9 +36,18 @@ const Header = ({ currentUser }) => {
           Contact
         </Link>
         {renderSignInOutBtn()}
+        <CartIcon />
       </div>
+      {cartDropDownHidden ? <CartDropdown /> : null}
     </div>
   );
 };
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user.currentUser,
+    cartDropDownHidden: state.cart.hidden
+  };
+};
+
+export default connect(mapStateToProps)(Header);

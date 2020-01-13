@@ -1,12 +1,17 @@
 import React from "react";
 import ReactDom from "react-dom";
 import { BrowserRouter } from "react-router-dom";
-import "./index.styles.css";
+import { Provider } from "react-redux";
+import store from "./store/store";
 import App from "./App";
 
+import "./index.styles.css";
+
 ReactDom.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>,
   document.querySelector("#root")
 );

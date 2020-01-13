@@ -1,5 +1,7 @@
 import React from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { setUser } from "./actions/userActions";
 import { auth, createUserProfile } from "./firebase/fireBaseUtils";
 import "./App.style.css";
 import HomePage from "./Pages/HomePage/HomePage";
@@ -22,10 +24,12 @@ class App extends React.Component {
         realUser.onSnapshot(snapshot => {
           const user = snapshot.data();
           const id = snapshot.id;
-          this.setState({ currentUser: { id, ...user } });
+          this.props.setUser({ id, ...user });
+          // this.setState({ currentUser: { id, ...user } });
         });
       } else {
-        this.setState({ currentUser: null });
+        // this.setState({ currentUser: null });
+        this.props.setUser(userAuth);
       }
     });
   }
@@ -35,15 +39,30 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route path="/" exact component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route path="/signin" component={SingInAndSignUp} />
+          <Route
+            path="/signin"
+            render={props =>
+              this.props.currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <SingInAndSignUp {...props} />
+              )
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    currentUser: state.user.currentUser
+  };
+};
+
+export default connect(mapStateToProps, { setUser })(App);
