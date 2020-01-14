@@ -6,6 +6,7 @@ import { auth, createUserProfile } from "./firebase/fireBaseUtils";
 import "./App.style.css";
 import HomePage from "./Pages/HomePage/HomePage";
 import ShopPage from "./Pages/ShopPage/ShopPage";
+import CheckoutPage from "./Pages/CheckoutPage/CheckoutPage";
 import Header from "./components/Header/Header";
 import SingInAndSignUp from "./Pages/SignIn-SignUp/SignIn-SignUp";
 
@@ -53,6 +54,7 @@ class App extends React.Component {
               )
             }
           />
+          <Route exact path="/checkout" component={CheckoutPage} />
         </Switch>
       </div>
     );
