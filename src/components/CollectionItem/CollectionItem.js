@@ -4,7 +4,8 @@ import { connect } from "react-redux";
 import { addToCart } from "../../actions/cartActions";
 import CustomButton from "../CustomButton/CustomButton";
 
-const CollectionItem = ({ item, addToCart }) => {
+const CollectionItem = props => {
+  const { item, addToCart } = props;
   return (
     <div className="collection-item">
       <div

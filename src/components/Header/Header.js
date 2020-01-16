@@ -44,7 +44,6 @@ const Header = ({ currentUser, cartDropDownHidden }) => {
 };
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     currentUser: state.user.currentUser,
     cartDropDownHidden: state.cart.hidden
