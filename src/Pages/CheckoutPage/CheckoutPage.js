@@ -2,6 +2,7 @@ import React from "react";
 import "./Checkout.styles.scss";
 import { connect } from "react-redux";
 import CheckoutItem from "../../components/CheckoutItem/CheckoutItem";
+import StripeCheckoutButton from "../../components/StripeButton/StripeButton";
 const CheckoutPage = props => {
   return (
     <div className="checkout-page">
@@ -28,6 +29,7 @@ const CheckoutPage = props => {
       <div className="total">
         <span>Total : ${props.totalPrice}</span>
       </div>
+      <StripeCheckoutButton price={props.totalPrice} />
     </div>
   );
 };
